@@ -1,14 +1,14 @@
 @extends('layouts.app')
 @section('title','Add Employees')
 @section('content')
-    <div class="row justify-content-center pb-5">
+    <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
             <div class="">
                 <a href="{{route('employee.index')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-bars mr-2"></i>Employees List </a>
             </div>
             <div class="card">
                 <div class="card-body">
-                    <form method="POST" action="{{route('employee.store')}}" id="employeeCreate">
+                    <form method="POST" action="{{route('employee.store')}}" id="employeeCreate" enctype="multipart/form-data">
                         @csrf
 
                         <div class="row">
@@ -55,6 +55,18 @@
                                     <input id="email" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                     @error('email')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="md-form">
+                                    <label for="password">Password</label>
+
+                                    <input id="password" type="text" class="form-control @error('password') is-invalid @enderror" name="password" value="{{ old('password') }}" required autocomplete="password" autofocus>
+
+                                    @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -153,6 +165,22 @@
                                     </span>
                                     @enderror
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="profile_img">Profile Image</label>
+
+                                    <input id="profile_img" type="file" class="form-control p-1 @error('profile_img') is-invalid @enderror" name="profile_img" value="{{ old('profile_img') }}" required autocomplete="profile_img" autofocus>
+
+                                    @error('profile_img')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+
+                                    <div class="preview_img my-4">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <div class="md-form my-0">
@@ -190,6 +218,14 @@
                     "format":"YYYY-MM-DD"
                 }
             });
+
+            $('#profile_img').on('change',function (){
+                var file_length = document.getElementById('profile_img').files.length;
+                $('.preview_img').html('');
+                for (var i = 0; i<file_length; i++){
+                    $('.preview_img').append(`<img src="${URL.createObjectURL(event.target.files[i])}"/>`);
+                }
+            })
         })
     </script>
 @stop

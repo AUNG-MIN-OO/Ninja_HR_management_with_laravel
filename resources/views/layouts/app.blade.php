@@ -18,12 +18,17 @@
 
     {{--    Data Tables--}}
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css
+">
 
     {{--    Date range picker--}}
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
     {{--    Custom css--}}
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+    {{--    Sweetalert 2 js--}}
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </head>
 <body>
@@ -276,8 +281,12 @@
 {{--    Date range picker--}}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/rowreorder/1.2.8/js/dataTables.rowReorder.min.js
+"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js
+"></script>
 
-<!-- Laravel Javascript Validation -->
+    <!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
 {{--    sweet alert 2--}}
@@ -285,6 +294,21 @@
 
 <script src="{{asset('js/main.js')}}"></script>
 @yield('script')
+
+<script>
+    $(function ($){
+        let token = document.head.querySelector('meta[name="csrf-token"]');
+        if (token){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': token.content
+                }
+            });
+        }else {
+            console.error('CSRF Token not found!')
+        }
+    })
+</script>
 
 </body>
 </html>

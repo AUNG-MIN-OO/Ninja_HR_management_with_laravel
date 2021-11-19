@@ -29,3 +29,11 @@ jQuery(function ($) {
         $(".page-wrapper").addClass("toggled");
     });
 });
+
+document.addEventListener('click',function (e){
+    if (document.getElementById('show-sidebar').contains(e.target)){
+        $(".page-wrapper").addClass("toggled");
+    }else if (!document.getElementById('sidebar').contains(e.target)){
+        $(".page-wrapper").removeClass("toggled");
+    }
+})
