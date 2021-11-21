@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateEmployee;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Yajra\DataTables\DataTables;
@@ -16,7 +17,8 @@ use RealRashid\SweetAlert\Facades\Alert;
 class EmployeeController extends Controller
 {
     public function index(){
-        return view('employee.index');
+        $ninja = Auth::user();
+        return view('employee.index',compact('ninja'));
     }
 
     public function create(){
@@ -79,7 +81,7 @@ class EmployeeController extends Controller
             })
             ->addColumn('action',function ($each){
                 $edit_icon = '<a href="'.route('employee.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                $show_icon = '<a href="'.route('employee.show',$each->id).'" class="btn btn-info btn-sm"><i class="fas fa-info"></i></a>';
+                $show_icon = '<a href="'.route('employee.show',$each->id).'" class="btn btn-info btn-sm mr-2"><i class="fas fa-info"></i></a>';
                 $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
                 return '<div>'.$edit_icon.$show_icon.$delete_icon.'</div>';
             })
@@ -129,7 +131,7 @@ class EmployeeController extends Controller
         $employee->profile_img = $profile_img_name;
         $employee->department_id = $request->department;
 
-        $employee->save();
+        $employee->update();
         toast('Employee info is updated','success');
         return redirect()->route('employee.index');
     }

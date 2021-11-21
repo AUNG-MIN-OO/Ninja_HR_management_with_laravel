@@ -1,24 +1,18 @@
 @extends('layouts.app')
-@section('title','Employees')
+@section('title','Departments')
 @section('content')
     <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
             <div class="">
-                <a href="{{route('employee.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new employee </a>
+                <a href="{{route('department.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new department </a>
             </div>
             <div class="card">
                 <div class="card-body">
                     <table class="table table-striped table-dark table-hover Datatable w-100">
                         <thead>
                         <tr>
-                            <th class="text-center no-sort"></th>
-                            <th class="text-center no-sort">Profile</th>
-                            <th class="text-center">Employee Id</th>
-                            <th class="text-center">Name</th>
-                            <th class="text-center">Phone</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Department</th>
-                            <th class="text-center no-sort">Is Present</th>
+                            <th class="text-center no-sort no-search"></th>
+                            <th class="text-center">Department Name</th>
                             <th class="text-center no-sort">Action</th>
                             <th class="text-center">Updated_at</th>
                         </tr>
@@ -33,21 +27,15 @@
     <script>
         $(document).ready(function (){
             var table = $('.Datatable').DataTable({
-                ajax: '/employee/datatable/ssd',
+                ajax: '/department/datatable/ssd',
                 columns: [
-                    { data: 'plus_icon', name: 'plus_icon', class: 'text-center' },
-                    { data: 'profile_img', name: 'name', class: 'text-center text-nowrap' },
-                    { data: 'employee_id', name: 'employee_id', class: 'text-center' },
-                    { data: 'name', name: 'name', class: 'text-center text-nowrap' },
-                    { data: 'phone', name: 'phone', class: 'text-center' },
-                    { data: 'email', name: 'email', class: 'text-center' },
-                    { data: 'department_name', name: 'department_name', class: 'text-center text-nowrap' },
-                    { data: 'is_present', name: 'is_present', class: 'text-center' },
-                    { data: 'action', name: 'action', class: 'text-center' },
+                    { data: 'plus-icon', name: 'plus-icon', class: 'text-center' },
+                    { data: 'title', name: 'title', class: 'text-center text-nowrap text-capitalize' },
+                    { data: 'action', name: 'action', class: 'text-center text-nowrap' },
                     { data: 'updated_at', name: 'updated_at', class: 'text-center' },
                 ],
                 order:[
-                    [9,"desc"]
+                    [0,"desc"]
                 ],
             });
 
@@ -65,8 +53,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             method: "DELETE",
-                            url: `/employee/${id}`,
-                            data: { name: "John", location: "Boston" }
+                            url: `/department/${id}`,
                         })
                         .done(function( msg ) {
                             table.ajax.reload();

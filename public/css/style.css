@@ -23,6 +23,58 @@ body{
     color: var(--primary-color);
 }
 
+.primary-background{
+    background-color: var(--primary-color) !important;
+}
+
+.table td, .table th{
+    vertical-align: middle;
+}
+
+/*------------------------ header menu --------------------------*/
+.header{
+    box-shadow: var(--box-shadow);
+}
+
+/*------------------------ Bottom menu --------------------------*/
+.bottom{
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    background: var(--background-color);
+}
+
+.bottom a{
+    text-align: center;
+    color: #000;
+}
+
+.bottom a p{
+    font-size: 12px;
+    text-transform: uppercase;
+}
+
+/*----------------------------- employee pages ------------------------*/
+.preview_img img{
+    width: 150px;
+}
+
+.profile_thumbnail{
+    width: 60px;
+    height: 60px;
+    background-size: cover;
+    border-radius: 10px;
+    border: 1px solid var(--primary-color);
+}
+
+/*data table*/
+mark{
+    background:var(--primary-color);
+    color:white;
+    padding: 1px;
+}
+
 .pagination .page-item.active .page-link{
     background-color: var(--primary-color);
 }
@@ -66,46 +118,9 @@ table.dataTable.dtr-inline.collapsed>tbody>tr.parent>td.dtr-control:before, tabl
 }
 
 
-    .badge{
+.badge{
     padding: 8px 12px;
     font-size: 12px;
-}
-
-/*------------------------ header menu --------------------------*/
-.header{
-    box-shadow: var(--box-shadow);
-}
-
-/*------------------------ Bottom menu --------------------------*/
-.bottom{
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    left: 0;
-    background: var(--background-color);
-}
-
-.bottom a{
-    text-align: center;
-    color: #000;
-}
-
-.bottom a p{
-    font-size: 12px;
-    text-transform: uppercase;
-}
-
-/*----------------------------- employee pages ------------------------*/
-.preview_img img{
-    width: 150px;
-}
-
-.profile_thumbnail{
-    width: 60px;
-    height: 60px;
-    background-size: cover;
-    border-radius: 10px;
-    border: 1px solid var(--primary-color);
 }
 
 /*----------------------------- side bar ------------------------*/
@@ -523,15 +538,15 @@ body {
 .chiller-theme .sidebar-wrapper .sidebar-dropdown .sidebar-submenu li a:hover:before,
 .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu:focus+span,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown.active a i {
-    color: #16c7ff;
-    text-shadow:0px 0px 10px rgba(22, 199, 255, 0.5);
+    color: var(--primary-color);
+    text-shadow:0px 0px 10px var(--secondary-color);
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu ul li a i,
 .chiller-theme .sidebar-wrapper .sidebar-menu .sidebar-dropdown div,
 .chiller-theme .sidebar-wrapper .sidebar-search input.search-menu,
 .chiller-theme .sidebar-wrapper .sidebar-search .input-group-text {
-    background: #3a3f48;
+    background: var(--secondary-color);
 }
 
 .chiller-theme .sidebar-wrapper .sidebar-menu .header-menu span {

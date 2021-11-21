@@ -36,25 +36,24 @@
         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div class="sidebar-brand">
-                    <a href="#">pro sidebar</a>
+                    <a href="{{url('/')}}">Ninja HR</a>
                     <div id="close-sidebar">
                         <i class="fas fa-times"></i>
                     </div>
                 </div>
-                <div class="sidebar-header">
+                <div class="sidebar-header d-flex align-items-center">
                     <div class="user-pic">
-                        <img class="img-responsive img-rounded" src="https://raw.githubusercontent.com/azouaoui-med/pro-sidebar-template/gh-pages/src/img/user.jpg"
+                        <img class="img-responsive img-rounded" src="{{\Illuminate\Support\Facades\Auth::user()->profilePath()}}"
                              alt="User picture">
                     </div>
                     <div class="user-info">
-              <span class="user-name">Jhon
-                <strong>Smith</strong>
-              </span>
-                        <span class="user-role">Administrator</span>
+                        <h5 class="user-name primary-text font-weight-bolder mb-1">
+                            {{\Illuminate\Support\Facades\Auth::user()->name}}
+                        </h5>
                         <span class="user-status">
-                <i class="fa fa-circle"></i>
-                <span>Online</span>
-              </span>
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
                     </div>
                 </div>
                 <!-- sidebar-header  -->
@@ -77,7 +76,7 @@
                             <span>Menu</span>
                         </li>
                         <li class="">
-                            <a href="#">
+                            <a href="{{url('/')}}">
                                 <i class="fas fa-home"></i>
                                 <span>Home</span>
                             </a>
@@ -86,6 +85,18 @@
                             <a href="{{route('employee.index')}}">
                                 <i class="fas fa-user-edit"></i>
                                 <span>Employee Management</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('department.index')}}">
+                                <i class="fas fa-sitemap"></i>
+                                <span class="text-nowrap">Department</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('role.index')}}">
+                                <i class="fas fa-shield-alt"></i>
+                                <span class="text-nowrap">Role</span>
                             </a>
                         </li>
                         <li class="sidebar-dropdown">
@@ -224,7 +235,11 @@
             <div class="d-flex justify-content-center">
                 <div class="col-12 col-md-8">
                     <div class="d-flex justify-content-between align-items-center">
+                        @if(request()->is('/'))
                         <a id="show-sidebar" class="btn btn-sm btn-theme" href="#"><i class="fas fa-bars"></i></a>
+                        @else
+                        <a onclick="window.history.go(-1);return false;" class="btn btn-sm btn-theme" href="#"><i class="fas fa-chevron-left"></i></a>
+                        @endif
                         <h5 class="mb-0">@yield('title')</h5>
                         <a id="show-sidebar" class="btn btn-sm btn-theme" href="#"><i class="fas fa-bars"></i></a>
                     </div>
@@ -238,7 +253,7 @@
             <div class="d-flex justify-content-center">
                 <div class="col-md-8">
                     <div class="d-flex justify-content-between">
-                        <a href="">
+                        <a href="{{url('/')}}">
                             <i class="fas fa-home"></i>
                             <p class="mb-0">Home</p>
                         </a>
@@ -250,9 +265,9 @@
                             <i class="fas fa-home"></i>
                             <p class="mb-0">Home</p>
                         </a>
-                        <a href="">
-                            <i class="fas fa-home"></i>
-                            <p class="mb-0">Home</p>
+                        <a href="{{route('profile')}}">
+                            <i class="fas fa-user"></i>
+                            <p class="mb-0">Profile</p>
                         </a>
                     </div>
                 </div>
@@ -278,6 +293,10 @@
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
 
+{{--    Data table highlight--}}
+<script src="https://cdn.jsdelivr.net/g/mark.js(jquery.mark.min.js)"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.10.13/features/mark.js/datatables.mark.js"></script>
+
 {{--    Date range picker--}}
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
@@ -286,7 +305,7 @@
 <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.9/js/dataTables.responsive.min.js
 "></script>
 
-    <!-- Laravel Javascript Validation -->
+<!-- Laravel Javascript Validation -->
 <script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
 {{--    sweet alert 2--}}
@@ -297,6 +316,7 @@
 
 <script>
     $(function ($){
+
         let token = document.head.querySelector('meta[name="csrf-token"]');
         if (token){
             $.ajaxSetup({
@@ -307,7 +327,39 @@
         }else {
             console.error('CSRF Token not found!')
         }
-    })
+
+    });
+    $.extend(true, $.fn.dataTable.defaults, {
+        mark: true,
+        responsive:true,
+        processing: true,
+        serverSide: true,
+        "columnDefs": [
+            {
+                "targets": [ 0 ],
+                "class": "control"
+            },
+            {
+                "targets":"no-sort",
+                "orderable":false,
+            },
+            {
+                "targets":"hidden",
+                "visible":false,
+            },
+            {
+                "targets":"no-search",
+                "searchable":false,
+            }
+        ],
+        language: {
+            "paginate": {
+                "previous":"<i class='fas fa-chevron-circle-left'></i>",
+                "next": "<i class='fas fa-chevron-circle-right'></i>"
+            },
+            "processing": "<img src='{{asset('image/Radio-1s-200px.svg')}}' style='width:80px; border-radius:10px'/><p class='my-4'>Loading...</p>"
+        },
+    });
 </script>
 
 </body>

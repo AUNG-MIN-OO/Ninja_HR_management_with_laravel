@@ -9,9 +9,8 @@
                         <div class="col-md-6">
                             <div class="text-center">
                                 <img src="{{asset('storage/employee/'.$ninja->profile_img)}}" alt="" style="width: 120px; height:120px;border-radius: 50%;margin-bottom: 20px">
-                                <h5 class="text-uppercase">
-                                    <i class="fas fa-id-card"></i>
-                                    Employee Id
+                                <h5 class="text-capitalize">
+                                    {{$ninja->name}}
                                 </h5>
                                 <p class="mb-0 font-weight-bolder primary-text">
                                     ( {{$ninja->employee_id}} )
@@ -24,17 +23,6 @@
                     </div>
                     <hr>
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="mb-3 text-md-center">
-                                <p class="mb-0">
-                                    <i class="fab fa-gg"></i>
-                                    Name
-                                </p>
-                                <p class="mb-0 primary-text">
-                                    {{$ninja->name}}
-                                </p>
-                            </div>
-                        </div>
                         <div class="col-md-6">
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
@@ -98,17 +86,6 @@
                                 </p>
                                 <p class="mb-0 primary-text">
                                     {{$ninja->choices}}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3 text-md-center">
-                                <p class="mb-0">
-                                    <i class="fab fa-gg"></i>
-                                    Department Name
-                                </p>
-                                <p class="mb-0 primary-text">
-                                    {{$ninja->department?$ninja->department->title:'-'}}
                                 </p>
                             </div>
                         </div>
