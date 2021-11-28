@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateDepartment;
 use App\Http\Requests\UpdateRole;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 
@@ -21,14 +22,16 @@ class RoleController extends Controller
     }
 
     public function create(){
-        return view('role.create');
+        $permissions = Permission::all();
+        return view('role.create',compact('permissions'));
     }
 
     public function store(StoreRole $request){
         $role = new Role();
         $role->name = $request->role_name;
-
         $role->save();
+
+        $role->givePermissionTo($request->permissions);
         toast('New role is created','success');
         return redirect()->route('role.index');
     }
@@ -37,6 +40,13 @@ class RoleController extends Controller
         $role = Role::query();
         return DataTables::of($role)
 
+            ->addColumn('permission',function ($each){
+                $permission_output = '';
+                foreach ($each->permissions->pluck('name') as $p){
+                    $permission_output .= '<span class="badge badge-pill badge-success px-2 py-1 mr-2">'.$p.'</span>';
+                }
+                return $permission_output;
+            })
             ->addColumn('action',function ($each){
                 $edit_icon = '<a href="'.route('role.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
                 $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
@@ -45,13 +55,14 @@ class RoleController extends Controller
             ->addColumn('plus-icon',function ($each){
                 return null;
             })
-            ->rawColumns(['action'])
+            ->rawColumns(['action','permission'])
             ->make(true);
     }
 
     public function edit($id){
         $role = Role::find($id);
-        return view('role.edit',compact('role'));
+        $permissions = Permission::all();
+        return view('role.edit',compact('role','permissions'));
     }
 
     public function update($id,UpdateRole $request){
@@ -60,6 +71,9 @@ class RoleController extends Controller
         $role->name = $request->role_name;
 
         $role->update();
+        $role->revokePermissionTo($role->permissions->pluck('name')->toArray());
+        $role->givePermissionTo($request->permissions);
+
         toast('Role info is updated','success');
         return redirect()->route('role.index');
     }

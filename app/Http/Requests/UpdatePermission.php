@@ -24,7 +24,7 @@ class UpdatePermission extends FormRequest
     public function rules()
     {
         return [
-            'permission_name' => 'required','min:1';
+            'permission_name' => 'required','min:1'
         ];
     }
 }

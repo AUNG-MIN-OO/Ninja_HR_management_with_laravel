@@ -152,14 +152,29 @@
                                     @enderror
                                 </div>
 
-                                <div class="md-form">
-                                    <select name="is_present" id="is_present" class="browser-default custom-select mt-md-4" >
+                                <div class="md-form mb-4">
+                                    <select name="is_present" id="is_present" class="browser-default custom-select" >
                                         <option value="">Choose Present or Not</option>
                                         <option value="1">YES</option>
                                         <option value="0">NO</option>
                                     </select>
 
                                     @error('is_present')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
+                                    <label for="role">Choose Role ( Designation )</label>
+                                    <select name="roles[]" id="role" class="browser-default custom-select select-ninja" multiple>
+                                        @foreach($roles as $d)
+                                            <option value="{{$d->name}}">{{$d->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('role')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

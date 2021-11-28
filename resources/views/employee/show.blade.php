@@ -10,8 +10,9 @@
                             <div class="text-center">
                                 <img src="{{asset('storage/employee/'.$ninja->profile_img)}}" alt="" style="width: 120px; height:120px;border-radius: 50%;margin-bottom: 20px">
                                 <h5 class="text-uppercase">
-                                    <i class="fas fa-id-card"></i>
-                                    Employee Id
+                                    @foreach($roles as $r)
+                                        <span class="font-weight-bolder primary-text">{{$r}}</span>
+                                    @endforeach
                                 </h5>
                                 <p class="mb-0 font-weight-bolder primary-text">
                                     ( {{$ninja->employee_id}} )

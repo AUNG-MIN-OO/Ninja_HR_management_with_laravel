@@ -11,8 +11,8 @@
                     <form method="POST" action="{{route('role.store')}}" id="roleCreate">
                         @csrf
 
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row justify-content-center">
+                            <div class="col-12">
                                 <div class="md-form">
                                     <label for="role_name">Role Name</label>
 
@@ -24,14 +24,24 @@
                                     </span>
                                     @enderror
                                 </div>
+                                <div class="row">
+                                    @foreach($permissions as $p)
+                                        <div class="col-md-4">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="permissions[]" value="{{$p->name}}" class="custom-control-input" id="checkbox_{{$p->id}}">
+                                                <label class="custom-control-label pt-1" for="checkbox_{{$p->id}}">{{$p->name}}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
 
-                            </div>
-                        </div>
-                        <div class="md-form my-0">
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-theme mx-0">
-                                    Add Now
-                                </button>
+                                </div>
+                                <div class="md-form my-0">
+                                    <div class="text-right">
+                                        <button type="submit" class="btn btn-theme mx-0">
+                                            Add Now
+                                        </button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -18,6 +18,7 @@
                             <th class="text-center">Phone</th>
                             <th class="text-center">Email</th>
                             <th class="text-center">Department</th>
+                            <th class="text-center">Role or Designation</th>
                             <th class="text-center no-sort">Is Present</th>
                             <th class="text-center no-sort">Action</th>
                             <th class="text-center">Updated_at</th>
@@ -42,12 +43,13 @@
                     { data: 'phone', name: 'phone', class: 'text-center' },
                     { data: 'email', name: 'email', class: 'text-center' },
                     { data: 'department_name', name: 'department_name', class: 'text-center text-nowrap' },
+                    { data: 'role_name', name: 'role_name', class: 'text-center text-nowrap' },
                     { data: 'is_present', name: 'is_present', class: 'text-center' },
                     { data: 'action', name: 'action', class: 'text-center' },
                     { data: 'updated_at', name: 'updated_at', class: 'text-center' },
                 ],
                 order:[
-                    [9,"desc"]
+                    [10,"desc"]
                 ],
             });
 

@@ -167,6 +167,21 @@
                                     @enderror
                                 </div>
 
+                                <div class="mb-2">
+                                    <label for="role">Choose Role ( Designation )</label>
+                                    <select name="roles[]" id="role" class="browser-default custom-select select-ninja" multiple>
+                                        @foreach($roles as $r)
+                                            <option value="{{$r->name}}" {{in_array($r->id, $ninja->roles->pluck('id')->toArray()) ? 'selected':''}}>{{$r->name}}</option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
                                 <div class="form-group">
                                     <label for="profile_img">Profile Image</label>
 

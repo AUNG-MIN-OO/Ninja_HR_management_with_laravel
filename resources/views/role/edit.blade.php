@@ -13,7 +13,7 @@
                         @method('PUT')
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-12">
 
                                 <div class="md-form">
                                     <label for="role_name">Name</label>
@@ -25,6 +25,16 @@
                                         <strong>{{ $message }}</strong>
                                     </span>
                                     @enderror
+                                </div>
+                                <div class="row">
+                                    @foreach($permissions as $p)
+                                        <div class="col-md-4">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" {{in_array($p->id, $role->permissions->pluck('id')->toArray()) ? "checked" : ""}} name="permissions[]" value="{{$p->name}}" class="custom-control-input" id="checkbox_{{$p->id}}">
+                                                <label class="custom-control-label pt-1" for="checkbox_{{$p->id}}">{{$p->name}}</label>
+                                            </div>
+                                        </div>
+                                    @endforeach
                                 </div>
                                 <div class="md-form my-0">
                                     <div class="text-right">

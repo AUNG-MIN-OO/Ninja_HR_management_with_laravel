@@ -1,10 +1,10 @@
 @extends('layouts.app')
-@section('title','Roles')
+@section('title','Permissions')
 @section('content')
     <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
             <div class="">
-                <a href="{{route('role.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new role</a>
+                <a href="{{route('permission.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new permissions</a>
             </div>
             <div class="card">
                 <div class="card-body">
@@ -12,8 +12,7 @@
                         <thead>
                         <tr>
                             <th class="text-center no-sort no-search"></th>
-                            <th class="text-center">Role</th>
-                            <th class="text-center">Permissions</th>
+                            <th class="text-center">Permission</th>
                             <th class="text-center no-sort">Action</th>
                             <th class="text-center hidden">Updated_at</th>
                         </tr>
@@ -28,16 +27,15 @@
     <script>
         $(document).ready(function (){
             var table = $('.Datatable').DataTable({
-                ajax: '/role/datatable/ssd',
+                ajax: '/permission/datatable/ssd',
                 columns: [
                     { data: 'plus-icon', name: 'plus-icon', class: 'text-center' },
                     { data: 'name', name: 'name', class: 'text-center text-nowrap text-capitalize' },
-                    { data: 'permission', name: 'permission', class: 'text-center text-nowrap text-capitalize' },
                     { data: 'action', name: 'action', class: 'text-center text-nowrap' },
                     { data: 'updated_at', name: 'updated_at', class: 'text-center' },
                 ],
                 order:[
-                    [4,"desc"]
+                    [3,"desc"]
                 ],
             });
 
@@ -55,7 +53,7 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             method: "DELETE",
-                            url: `/role/${id}`,
+                            url: `/permission/${id}`,
                         })
                             .done(function( msg ) {
                                 table.ajax.reload();

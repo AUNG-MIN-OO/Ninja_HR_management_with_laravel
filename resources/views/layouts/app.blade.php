@@ -27,6 +27,9 @@
     {{--    Custom css--}}
     <link rel="stylesheet" href="{{asset('css/style.css')}}">
 
+    {{--    select 2 css   --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
     {{--    Sweetalert 2 js--}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -97,6 +100,12 @@
                             <a href="{{route('role.index')}}">
                                 <i class="fas fa-shield-alt"></i>
                                 <span class="text-nowrap">Role</span>
+                            </a>
+                        </li>
+                        <li class="">
+                            <a href="{{route('permission.index')}}">
+                                <i class="fas fa-shield-alt"></i>
+                                <span class="text-nowrap">Permission</span>
                             </a>
                         </li>
                         <li class="sidebar-dropdown">
@@ -311,7 +320,10 @@
 {{--    sweet alert 2--}}
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-<script src="{{asset('js/main.js')}}"></script>
+{{--select 2 js--}}
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+    <script src="{{asset('js/main.js')}}"></script>
 @yield('script')
 
 <script>
@@ -360,6 +372,11 @@
             "processing": "<img src='{{asset('image/Radio-1s-200px.svg')}}' style='width:80px; border-radius:10px'/><p class='my-4'>Loading...</p>"
         },
     });
+
+    $(document).ready(function (){
+        $('.select-ninja').select2();
+    })
+
 </script>
 
 </body>

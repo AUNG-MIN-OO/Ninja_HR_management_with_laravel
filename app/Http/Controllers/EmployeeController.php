@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Spatie\Permission\Models\Role;
 use Yajra\DataTables\DataTables;
 use RealRashid\SweetAlert\Facades\Alert;
 
@@ -23,7 +24,8 @@ class EmployeeController extends Controller
 
     public function create(){
         $departments = Department::orderBy('title')->get();
-        return view('employee.create',compact('departments'));
+        $roles = Role::all();
+        return view('employee.create',compact('departments','roles'));
     }
 
     public function store(StoreEmployee $request){
@@ -50,6 +52,8 @@ class EmployeeController extends Controller
         $employee->department_id = $request->department;
 
         $employee->save();
+
+        $employee->syncRoles($request->roles);
         toast('New employee is added','success');
         return redirect()->route('employee.index');
     }
@@ -72,6 +76,13 @@ class EmployeeController extends Controller
             ->addColumn('department_name',function ($each){
                 return $each->department ? $each->department->title : '-';
             })
+            ->addColumn('role_name',function ($each){
+                $output= "";
+                foreach ($each->roles as $role){
+                    $output .= '<span class="badge badge-pill badge-success mr-2">'.$role->name.'</span>';
+                }
+                return $output;
+            })
             ->editColumn('is_present',function ($each){
                 if ($each->is_present == 1){
                     return '<span class="badge btn-theme">Present</span>';
@@ -91,14 +102,15 @@ class EmployeeController extends Controller
             ->addColumn('plus_icon',function ($each){
                 return null;
             })
-            ->rawColumns(['profile_img','is_present','action'])
+            ->rawColumns(['profile_img','is_present','action','role_name'])
             ->make(true);
     }
 
     public function edit($id){
         $ninja = User::find($id);
+        $roles = Role::all();
         $departments = Department::orderBy('title')->get();
-        return view('employee.edit',compact('ninja','departments'));
+        return view('employee.edit',compact('ninja','departments','roles'));
     }
 
     public function update($id,UpdateEmployee $request){
@@ -132,13 +144,16 @@ class EmployeeController extends Controller
         $employee->department_id = $request->department;
 
         $employee->update();
+
+        $employee->syncRoles($request->roles);
         toast('Employee info is updated','success');
         return redirect()->route('employee.index');
     }
 
     public function show($id){
         $ninja = User::findOrFail($id);
-        return view('employee.show',compact('ninja'));
+        $roles = $ninja->roles->pluck('name');
+        return view('employee.show',compact('ninja','roles'));
     }
 
     public function destroy($id){
