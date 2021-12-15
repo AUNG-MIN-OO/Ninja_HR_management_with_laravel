@@ -15,6 +15,11 @@
                                 <p class="mb-0 font-weight-bolder primary-text">
                                     ( {{$ninja->employee_id}} )
                                 </p>
+                                <p class="my-2">
+                                    @foreach($ninja->roles as $role)
+                                        <span class="badge badge-pill badge-primary primary-background text-uppercase">{{$role->name}}</span>
+                                    @endforeach
+                                </p>
                                 <p class="my-2 badge badge-pill badge-primary primary-background text-capitalize">
                                     {{$ninja->department?$ninja->department->title:'-'}}
                                 </p>

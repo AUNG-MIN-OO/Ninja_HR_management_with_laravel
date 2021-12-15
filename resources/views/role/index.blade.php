@@ -3,9 +3,11 @@
 @section('content')
     <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
+            @can('create-role')
             <div class="">
                 <a href="{{route('role.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new role</a>
             </div>
+            @endcan
             <div class="card">
                 <div class="card-body">
                     <table class="table table-striped table-dark table-hover Datatable w-100">
@@ -32,7 +34,7 @@
                 columns: [
                     { data: 'plus-icon', name: 'plus-icon', class: 'text-center' },
                     { data: 'name', name: 'name', class: 'text-center text-nowrap text-capitalize' },
-                    { data: 'permission', name: 'permission', class: 'text-center text-nowrap text-capitalize' },
+                    { data: 'permission', name: 'permission', class: 'text-center text-capitalize' },
                     { data: 'action', name: 'action', class: 'text-center text-nowrap' },
                     { data: 'updated_at', name: 'updated_at', class: 'text-center' },
                 ],

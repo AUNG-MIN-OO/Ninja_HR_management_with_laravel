@@ -13,12 +13,19 @@ use RealRashid\SweetAlert\Facades\Alert;
 class DepartmentController extends Controller
 {
     public function index(){
-        $ninja = Auth::user();
-        $department = Department::all();
-        return view('department.index',compact('department','ninja'));
+        if(auth()->user()->can('view-department')){
+            $ninja = Auth::user();
+            $department = Department::all();
+            return view('department.index',compact('department','ninja'));
+        }else{
+            abort(403,'Unauthorized Action');
+        }
     }
 
     public function create(){
+        if(!auth()->user()->can('create-department')){
+            abort(403,'Unauthorized Action');
+        }
         return view('department.create');
     }
 
@@ -36,8 +43,15 @@ class DepartmentController extends Controller
         return DataTables::of($department)
 
             ->addColumn('action',function ($each){
-                $edit_icon = '<a href="'.route('department.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+                $edit_icon = '';
+                $delete_icon = '';
+                if(auth()->user()->can('edit-department')){
+                    $edit_icon = '<a href="'.route('department.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
+                }
+
+                if(auth()->user()->can('delete-department')){
+                    $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+                }
                 return '<div>'.$edit_icon.$delete_icon.'</div>';
             })
             ->addColumn('plus-icon',function ($each){
@@ -48,6 +62,9 @@ class DepartmentController extends Controller
     }
 
     public function edit($id){
+        if(!auth()->user()->can('edit-department')){
+            abort(403,'Unauthorized Action');
+        }
         $department = Department::find($id);
         return view('department.edit',compact('department'));
     }
@@ -63,6 +80,9 @@ class DepartmentController extends Controller
     }
 
     public function destroy($id){
+        if(!auth()->user()->can('delete-department')){
+            abort(403,'Unauthorized Action');
+        }
         $department = Department::findOrFail($id);
         $department->delete();
 

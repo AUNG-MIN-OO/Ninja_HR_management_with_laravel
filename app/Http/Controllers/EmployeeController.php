@@ -18,11 +18,17 @@ use RealRashid\SweetAlert\Facades\Alert;
 class EmployeeController extends Controller
 {
     public function index(){
+        if(!auth()->user()->can('view-employee')){
+            abort(403,'Unauthorized Action');
+        }
         $ninja = Auth::user();
         return view('employee.index',compact('ninja'));
     }
 
     public function create(){
+        if(!auth()->user()->can('create-employee')){
+            abort(403,'Unauthorized Action');
+        }
         $departments = Department::orderBy('title')->get();
         $roles = Role::all();
         return view('employee.create',compact('departments','roles'));
@@ -91,9 +97,23 @@ class EmployeeController extends Controller
                 }
             })
             ->addColumn('action',function ($each){
-                $edit_icon = '<a href="'.route('employee.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                $show_icon = '<a href="'.route('employee.show',$each->id).'" class="btn btn-info btn-sm mr-2"><i class="fas fa-info"></i></a>';
-                $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+
+                $edit_icon = '';
+                $delete_icon = '';
+                $show_icon = '';
+
+                if(auth()->user()->can('edit-employee')){
+                    $edit_icon = '<a href="'.route('employee.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
+                }
+
+                if(auth()->user()->can('delete-employee')){
+                    $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+                }
+
+                if(auth()->user()->can('view-employee')){
+                    $show_icon = '<a href="'.route('employee.show',$each->id).'" class="btn btn-info btn-sm mr-2"><i class="fas fa-info"></i></a>';
+                }
+
                 return '<div>'.$edit_icon.$show_icon.$delete_icon.'</div>';
             })
             ->editColumn('updated_at',function ($each){
@@ -107,6 +127,9 @@ class EmployeeController extends Controller
     }
 
     public function edit($id){
+        if(!auth()->user()->can('edit-employee')){
+            abort(403,'Unauthorized Action');
+        }
         $ninja = User::find($id);
         $roles = Role::all();
         $departments = Department::orderBy('title')->get();
@@ -116,7 +139,7 @@ class EmployeeController extends Controller
     public function update($id,UpdateEmployee $request){
         $employee = User::findOrFail($id);
 
-        $profile_img_name = $employee->profile_image;
+        $profile_img_name = $employee->profile_img;
         if ($request->hasFile('profile_img')){
             $profile_img = $request->file('profile_img');
             $profile_img_name = uniqid()."_".time()."_"."profile.".$request->file('profile_img')->getClientOriginalExtension();
@@ -157,6 +180,9 @@ class EmployeeController extends Controller
     }
 
     public function destroy($id){
+        if(!auth()->user()->can('delete-employee')){
+            abort(403,'Unauthorized Action');
+        }
         $employee = User::findOrFail($id);
         $employee->delete();
 

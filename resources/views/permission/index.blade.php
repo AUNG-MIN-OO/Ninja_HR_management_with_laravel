@@ -3,9 +3,11 @@
 @section('content')
     <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
+            @can('create-permission')
             <div class="">
                 <a href="{{route('permission.create')}}" class="btn btn-theme btn-sm mx-0" style="font-size: 13px"><i class="fas fa-plus-circle mr-2"></i>Add new permissions</a>
             </div>
+            @endcan
             <div class="card">
                 <div class="card-body">
                     <table class="table table-striped table-dark table-hover Datatable w-100">

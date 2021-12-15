@@ -1,33 +1,32 @@
 @extends('layouts.app')
-@section('title','View Employees')
+@section('title','View Company Settings')
+@section('style')
+    <style>
+        .edit-setting:hover{
+            color: var(--secondary-color);
+        }
+    </style>
+@endsection
 @section('content')
     <div class="d-flex justify-content-center pb-5">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <div class="row justify-content-center">
+                    <a href="{{route('company-setting.edit',$setting->id)}}" class="primary-text edit-setting" style="position: absolute; top: 5px; right: 5px ;cursor: pointer">
+                        <i class="fas fa-edit" style="font-size: 30px"></i>
+                    </a>
+                    <div class="row">
                         <div class="col-md-6">
-                            <div class="text-center">
-                                <img src="{{asset('storage/employee/'.$ninja->profile_img)}}" alt="" style="width: 120px; height:120px;border-radius: 50%;margin-bottom: 20px">
-                                <h5 class="text-capitalize">
-                                    {{$ninja->name}}
-                                </h5>
-                                <p class="mb-0 font-weight-bolder primary-text">
-                                    ( {{$ninja->employee_id}} )
+                            <div class="mb-3 text-md-center">
+                                <p class="mb-0">
+                                    <i class="fab fa-gg"></i>
+                                    Name
                                 </p>
-                                <p class="my-2">
-                                    @foreach($ninja->roles as $role)
-                                        <span class="badge badge-pill badge-primary primary-background text-uppercase">{{$role->name}}</span>
-                                    @endforeach
-                                </p>
-                                <p class="my-2 badge badge-pill badge-primary primary-background text-capitalize">
-                                    {{$ninja->department?$ninja->department->title:'-'}}
+                                <p class="mb-0 primary-text text-uppercase">
+                                    {{$setting->company_name}}
                                 </p>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                    <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
@@ -35,7 +34,7 @@
                                     Phone
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->phone}}
+                                    {{$setting->company_phone}}
                                 </p>
                             </div>
                         </div>
@@ -46,7 +45,7 @@
                                     Email
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->email}}
+                                    {{$setting->company_email}}
                                 </p>
                             </div>
                         </div>
@@ -57,7 +56,7 @@
                                     Address
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->address}}
+                                    {{$setting->company_address}}
                                 </p>
                             </div>
                         </div>
@@ -65,10 +64,10 @@
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
                                     <i class="fab fa-gg"></i>
-                                    Birthday
+                                    Office Start Time
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->birthday}}
+                                    {{$setting->office_start_time}}
                                 </p>
                             </div>
                         </div>
@@ -76,10 +75,10 @@
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
                                     <i class="fab fa-gg"></i>
-                                    NRC Number
+                                    Office End Time
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->nrc_number}}
+                                    {{$setting->office_end_time}}
                                 </p>
                             </div>
                         </div>
@@ -87,10 +86,10 @@
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
                                     <i class="fab fa-gg"></i>
-                                    Gender
+                                    Break Start Time
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->choices}}
+                                    {{$setting->break_start_time}}
                                 </p>
                             </div>
                         </div>
@@ -98,21 +97,10 @@
                             <div class="mb-3 text-md-center">
                                 <p class="mb-0">
                                     <i class="fab fa-gg"></i>
-                                    Date Of Join
+                                    Break End Time
                                 </p>
                                 <p class="mb-0 primary-text">
-                                    {{$ninja->date_of_join}}
-                                </p>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="mb-3 text-md-center">
-                                <p class="mb-0">
-                                    <i class="fab fa-gg"></i>
-                                    Is present
-                                </p>
-                                <p class="mb-0 primary-text">
-                                    {{$ninja->is_present==1?'Yes':'No'}}
+                                    {{$setting->break_start_time}}
                                 </p>
                             </div>
                         </div>

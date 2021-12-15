@@ -33,6 +33,8 @@
     {{--    Sweetalert 2 js--}}
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+    @yield('style')
+
 </head>
 <body>
     <div class="page-wrapper chiller-theme">
@@ -84,30 +86,46 @@
                                 <span>Home</span>
                             </a>
                         </li>
-                        <li class="">
-                            <a href="{{route('employee.index')}}">
-                                <i class="fas fa-user-edit"></i>
-                                <span>Employee Management</span>
-                            </a>
-                        </li>
+                        @can('view-companySetting')
+                            <li class="">
+                                <a href="{{route('company-setting.show',1)}}">
+                                    <i class="fas fa-building"></i>
+                                    <span>Company Setting</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view-employee')
+                            <li class="">
+                                <a href="{{route('employee.index')}}">
+                                    <i class="fas fa-user-edit"></i>
+                                    <span>Employee Management</span>
+                                </a>
+                            </li>
+                        @endcan
+                        @can('view-department')
                         <li class="">
                             <a href="{{route('department.index')}}">
                                 <i class="fas fa-sitemap"></i>
                                 <span class="text-nowrap">Department</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('view-role')
                         <li class="">
                             <a href="{{route('role.index')}}">
                                 <i class="fas fa-shield-alt"></i>
                                 <span class="text-nowrap">Role</span>
                             </a>
                         </li>
+                        @endcan
+                        @can('view-permission')
                         <li class="">
                             <a href="{{route('permission.index')}}">
                                 <i class="fas fa-shield-alt"></i>
                                 <span class="text-nowrap">Permission</span>
                             </a>
                         </li>
+                        @endcan
                         <li class="sidebar-dropdown">
                             <a href="#">
                                 <i class="fa fa-shopping-cart"></i>
@@ -221,19 +239,7 @@
             </div>
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
-                <a href="#">
-                    <i class="fa fa-bell"></i>
-                    <span class="badge badge-pill badge-warning notification">3</span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">7</span>
-                </a>
-                <a href="#">
-                    <i class="fa fa-cog"></i>
-                    <span class="badge-sonar"></span>
-                </a>
-                <a href="#">
+                <a href="" class="logout-btn btn btn-theme p-0">
                     <i class="fa fa-power-off"></i>
                 </a>
             </div>
@@ -375,6 +381,29 @@
 
     $(document).ready(function (){
         $('.select-ninja').select2();
+
+        // logout click function
+        $('.logout-btn').on('click',function (e){
+            e.preventDefault();
+
+            Swal.fire({
+                title: 'Are you sure to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, Logout now!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url:'/logout',
+                        type:'POST',
+                    }).done(function (res){
+                        window.location.reload();
+                    });
+                }
+            })
+        })
     })
 
 </script>

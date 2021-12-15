@@ -16,12 +16,18 @@ use Yajra\DataTables\DataTables;
 class RoleController extends Controller
 {
     public function index(){
+        if(!auth()->user()->can('view-role')){
+            abort(403,'Unauthorized Action');
+        }
         $ninja = Auth::user();
         $role = Role::all();
         return view('role.index',compact('role','ninja'));
     }
 
     public function create(){
+        if(!auth()->user()->can('create-role')){
+            abort(403,'Unauthorized Action');
+        }
         $permissions = Permission::all();
         return view('role.create',compact('permissions'));
     }
@@ -48,8 +54,16 @@ class RoleController extends Controller
                 return $permission_output;
             })
             ->addColumn('action',function ($each){
-                $edit_icon = '<a href="'.route('role.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
-                $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+
+                $edit_icon = '';
+                $delete_icon = '';
+                if(auth()->user()->can('edit-role')){
+                    $edit_icon = '<a href="'.route('role.edit',$each->id).'" class="btn btn-warning btn-sm mr-2"><i class="fas fa-edit"></i></a>';
+                }
+
+                if(auth()->user()->can('delete-role')){
+                    $delete_icon = '<a href="#" class="btn btn-danger btn-sm delete-btn"  data-id="'. $each->id .'"><i class="fas fa-trash-alt"></i></a>';
+                }
                 return '<div>'.$edit_icon.$delete_icon.'</div>';
             })
             ->addColumn('plus-icon',function ($each){
@@ -60,6 +74,9 @@ class RoleController extends Controller
     }
 
     public function edit($id){
+        if(!auth()->user()->can('edit-role')){
+            abort(403,'Unauthorized Action');
+        }
         $role = Role::find($id);
         $permissions = Permission::all();
         return view('role.edit',compact('role','permissions'));
@@ -79,6 +96,9 @@ class RoleController extends Controller
     }
 
     public function destroy($id){
+        if(!auth()->user()->can('delete-role')){
+            abort(403,'Unauthorized Action');
+        }
         $role = Role::findOrFail($id);
         $role->delete();
 
