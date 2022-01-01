@@ -119,9 +119,47 @@
                     </div>
                 </div>
             </div>
+            <div class="card mt-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h5 class="text-center">Log in with device authentication</h5>
+                                <form id="register-form">
+                                    <button type="submit" class="btn shadow-sm" style="padding: 20px 10px">
+                                        <i class="fas fa-fingerprint fa-4x primary-text"></i>
+                                        <i class="fas fa-plus primary-text"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection
 @section('script')
+    <script>
+        $(document).ready(function (){
 
+            const register = (event) => {
+                event.preventDefault()
+                new Larapass({
+                    register: 'webauthn/register',
+                    registerOptions: 'webauthn/register/options'
+                }).register()
+                    .then(response => {
+                        Swal.fire({
+                            title: "Successfully Registered!",
+                            text: "Device authentication is successfully set up.",
+                            icon: "success",
+                        })
+                    })
+                    .catch(response => console.log(response))
+            }
+
+            document.getElementById('register-form').addEventListener('submit', register)
+        })
+    </script>
 @stop

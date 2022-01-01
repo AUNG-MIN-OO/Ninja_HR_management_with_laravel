@@ -2,15 +2,17 @@
 
 namespace App;
 
+use DarkGhostHunter\Larapass\Contracts\WebAuthnAuthenticatable;
+use DarkGhostHunter\Larapass\WebAuthnAuthentication;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Department;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable
+class User extends Authenticatable implements WebAuthnAuthenticatable
 {
-    use Notifiable,HasRoles;
+    use Notifiable,HasRoles,WebAuthnAuthentication;
 
     /**
      * The attributes that are mass assignable.

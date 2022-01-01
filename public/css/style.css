@@ -31,6 +31,10 @@ body{
     vertical-align: middle;
 }
 
+a:hover{
+    color: var(--primary-color);
+}
+
 /*------------------------ header menu --------------------------*/
 .header{
     box-shadow: var(--box-shadow);
