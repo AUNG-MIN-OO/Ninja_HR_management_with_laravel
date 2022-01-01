@@ -12,9 +12,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
+                    @can('edit-companySetting')
                     <a href="{{route('company-setting.edit',$setting->id)}}" class="primary-text edit-setting" style="position: absolute; top: 5px; right: 5px ;cursor: pointer">
                         <i class="fas fa-edit" style="font-size: 30px"></i>
                     </a>
+                    @endcan
                     <div class="row">
                         <div class="col-md-6">
                             <div class="mb-3 text-md-center">
