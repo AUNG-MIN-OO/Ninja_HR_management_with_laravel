@@ -7,7 +7,7 @@
                 <div class="text-center mb-4">
                     <img src="{{asset('image/logo.png')}}" alt="Ninja HR" style="width: 80px">
                 </div>
-                <div class="card">
+                <div class="card" style="height: 430px">
                     <div class="card-body">
                         <div class="text-center mb-3">
                             <i class="fas fa-unlock-alt primary-text" style="font-size: 80px"></i>

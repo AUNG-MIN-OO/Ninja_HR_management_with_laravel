@@ -183,6 +183,29 @@
             $('.biometric-register').on('click',function (event){
                 register(event);
             })
+
+            $(document).on('click', '.delete-biometric', function (event){
+                event.preventDefault();
+                var id = $(this).data('id');
+                Swal.fire({
+                    title: 'Are you sure to delete?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, Delete now!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url:`profile/biometrics-data-delete/${id}`,
+                            type:'DELETE',
+                        }).done(function (res){
+                            window.location.reload();
+                        })
+                        .catch(error=>console.log(error));
+                    }
+                })
+            })
         })
     </script>
 @stop

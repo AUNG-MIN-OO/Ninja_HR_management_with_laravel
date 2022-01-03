@@ -22,4 +22,11 @@ class ProfileController extends Controller
         $biometric = DB::table('web_authn_credentials')->where('user_id',$ninja->id)->get();
         return view('components.biometric_data',compact('ninja','biometric'))->render();
     }
+
+    public function biometricDataDelete($id){
+        $authUser = Auth::user()->id;
+        $biometric = DB::table('web_authn_credentials')->where('id',$id)->where('user_id',$authUser)->delete();
+
+        return 'success';
+    }
 }

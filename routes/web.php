@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function (){
 
     Route::get('profile','ProfileController@profile')->name('profile');
     Route::get('profile/biometrics','ProfileController@biometricData');
+    Route::delete('profile/biometrics-data-delete/{id}','ProfileController@biometricDataDelete');
 
     Route::resource('department','DepartmentController');
     Route::get('department/datatable/ssd','DepartmentController@ssd');

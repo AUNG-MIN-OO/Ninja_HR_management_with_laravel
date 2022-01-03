@@ -68,6 +68,15 @@ a:hover{
     background-color: var(--primary-color) !important;
 }
 
+/*----------------------------- profile ------------------------*/
+.biometric-data .delete-biometric{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    font-weight: bolder;
+    font-size: 15px;
+}
+
 /*----------------------------- employee pages ------------------------*/
 .preview_img img{
     width: 150px;
