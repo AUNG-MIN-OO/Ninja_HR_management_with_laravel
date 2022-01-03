@@ -42,6 +42,9 @@
 <!-- MDB core JavaScript -->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/js/mdb.min.js"></script>
 
+{{--larapass--}}
+<script src="{{ asset('vendor/larapass/js/larapass.js') }}"></script>
+
 @yield('extra_js')
 </body>
 </html>

@@ -125,12 +125,14 @@
                         <div class="col-12">
                             <div class="text-center">
                                 <h5 class="text-center">Log in with device authentication</h5>
-                                <form id="register-form">
-                                    <button type="submit" class="btn shadow-sm" style="padding: 20px 10px">
+                                <div class="">
+                                    <span class="biometric-data"></span>
+                                    <button type="submit" class="btn shadow-sm biometric-register" style="padding: 20px 10px;width: 120px;border-radius: 20px">
                                         <i class="fas fa-fingerprint fa-4x primary-text"></i>
                                         <i class="fas fa-plus primary-text"></i>
+                                        <p class="mb-0 text-nowrap mt-2 text-capitalize font-weight-bolder">Add new</p>
                                     </button>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -142,6 +144,17 @@
 @section('script')
     <script>
         $(document).ready(function (){
+            biometricData();
+
+            function biometricData(){
+                $.ajax({
+                    url:'/profile/biometrics',
+                    type:'GET',
+                    success: function (res){
+                        $('.biometric-data').html(res);
+                    }
+                })
+            }
 
             const register = (event) => {
                 event.preventDefault()
@@ -150,16 +163,26 @@
                     registerOptions: 'webauthn/register/options'
                 }).register()
                     .then(response => {
-                        Swal.fire({
-                            title: "Successfully Registered!",
-                            text: "Device authentication is successfully set up.",
-                            icon: "success",
+
+                        const Toast = Swal.mixin({
+                            toast: true,
+                            position: 'top-end',
+                            showConfirmButton: false,
+                            timer: 3000,
+                            timerProgressBar: true,
                         })
+                        Toast.fire({
+                            icon: 'success',
+                            title: 'Biometric authentication added!'
+                        })
+                        biometricData();
                     })
                     .catch(response => console.log(response))
             }
 
-            document.getElementById('register-form').addEventListener('submit', register)
+            $('.biometric-register').on('click',function (event){
+                register(event);
+            })
         })
     </script>
 @stop

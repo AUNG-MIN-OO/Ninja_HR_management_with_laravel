@@ -13,9 +13,7 @@
                         <h4>Login </h4>
                         <p>Please fill log in form</p>
                     </div>
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-
+                    <form action="{{route('login-option')}}" method="GET">
                         <div class="md-form">
                             <label for="phone">{{ __('Phone') }}</label>
 
@@ -23,48 +21,11 @@
 
                             @error('phone')
                             <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                                    <strong>{{ $message }}</strong>
+                                </span>
                             @enderror
                         </div>
-
-                        <div class="md-form">
-                            <label for="password" class="">{{ __('Password') }}</label>
-
-                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" value="{{old('password')}}" required autocomplete="current-password">
-
-                            @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="d-flex justify-content-around">
-                            <div>
-                                <!-- Remember me -->
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="defaultLoginFormRemember">
-                                    <label class="custom-control-label" for="defaultLoginFormRemember">Remember me</label>
-                                </div>
-                            </div>
-                            <div>
-                                <!-- Forgot password -->
-                                @if (Route::has('password.request'))
-                                    <a class="" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
-                            </div>
-                        </div>
-
-                        <div class="md-form">
-                            <div class="text-right">
-                                <button type="submit" class="btn btn-theme  w-100 mx-0">
-                                    {{ __('Login') }}
-                                </button>
-                            </div>
-                        </div>
+                        <button class="btn btn-theme w-100">Submit</button>
                     </form>
                 </div>
             </div>

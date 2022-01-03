@@ -18,6 +18,9 @@ use App\Http\Controllers\Auth\WebAuthnLoginController;
 */
 Auth::routes(['register'=>false]);
 
+Route::get('/login-option',[\App\Http\Controllers\Auth\LoginController::class,'loginOption'])->name('login-option');
+
+Route::view('/login','auth.login')->name('login');
 
 Route::post('webauthn/register/options', [WebAuthnRegisterController::class, 'options'])
     ->name('webauthn.register.options');
@@ -36,6 +39,7 @@ Route::middleware('auth')->group(function (){
     Route::get('employee/datatable/ssd','EmployeeController@ssd');
 
     Route::get('profile','ProfileController@profile')->name('profile');
+    Route::get('profile/biometrics','ProfileController@biometricData');
 
     Route::resource('department','DepartmentController');
     Route::get('department/datatable/ssd','DepartmentController@ssd');
